@@ -1,6 +1,6 @@
-name: template-tutorial
-title: Template Tutorial
-version: master
+name: red-hat-openshift-connectors-workshop
+title: Red Hat OpenShift Connectors Workshop
+version: main
 nav:
   - modules/ROOT/nav.adoc
 
