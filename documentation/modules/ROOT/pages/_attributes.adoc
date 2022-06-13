@@ -1,2 +1,7 @@
 :experimental:
 :source-highlighter: highlightjs
+:product-long-kafka: OpenShift Streams for Apache Kafka
+:product-kafka: Streams for Apache Kafka
+:product-long-connectors: Red Hat OpenShift Connectors
+:product-connectors: OpenShift Connectors
+:product-connectors-short: Connectors
