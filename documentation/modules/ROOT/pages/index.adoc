@@ -35,3 +35,6 @@ In this workshop you will:
 
 [.tile]
 .xref:01-provision-kafka-instance.adoc[1. Provision a Kafka instance]
+* xref:01-provision-kafka-instance.adoc#redhat_account[Create a Red Hat Account]
+* xref:01-provision-kafka-instance.adoc#kafka[Provision a Kafka instance]
+* xref:01-provision-kafka-instance.adoc#configure_kafka[Configure the instance of {product-kafka} for use with {product-long-connectors}]
