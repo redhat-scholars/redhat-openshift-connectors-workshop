@@ -1,4 +1,8 @@
-* xref:01-provision-kafka-instance.adoc[1. Provision a Kafka instance]
+* xref:01-provision-kafka-instance.adoc[1. Provision a Kafka instance in OpenShift Streams for Apache Kafka]
 ** xref:01-provision-kafka-instance.adoc#redhat_account[Create a Red Hat Account]
 ** xref:01-provision-kafka-instance.adoc#kafka[Provision a Kafka instance]
-** xref:01-provision-kafka-instance.adoc#configure_kafka[Configure the Kafka instance]
+** xref:01-provision-kafka-instance.adoc#configure_kafka[Configure the instance of Streams for Apache Kafka for use with OpenShift Connectors]
+
+* xref:02-source-connector.adoc[2. Create source and sink OpenShift Connectors instances]
+** xref:02-source-connector.adoc#create_source_connector[Create a source connector]
+** xref:02-source-connector.adoc#create_sink_connector[Create a sink connector]

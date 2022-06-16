@@ -4,4 +4,4 @@
 :product-kafka: Streams for Apache Kafka
 :product-long-connectors: Red Hat OpenShift Connectors
 :product-connectors: OpenShift Connectors
-:product-connectors-short: Connectors
+:product-short-connectors: Connectors

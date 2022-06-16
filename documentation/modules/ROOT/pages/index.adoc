@@ -26,15 +26,20 @@ In this workshop you will:
 
 * Provision a Kafka instance using {product-long-kafka}.
 * Configure the {product-kafka} instance for use with {product-long-connectors}.
-* Create a {product-connectors-short} instance as a data source.
-* Create a {product-connectors-short} instance as a data sink.
-* Create a {product-connectors-short} instance to capture data change events from a cloud database.
+* Create a {product-short-connectors} instance as a data source.
+* Create a {product-short-connectors} instance as a data sink.
+* Create a {product-short-connectors} instance to capture data change events from a cloud database.
 
 [.tiles.browse]
 == Browse modules
 
 [.tile]
-.xref:01-provision-kafka-instance.adoc[1. Provision a Kafka instance]
+.xref:01-provision-kafka-instance.adoc[1. Provision a Kafka instance in {product-long-kafka}]
 * xref:01-provision-kafka-instance.adoc#redhat_account[Create a Red Hat Account]
 * xref:01-provision-kafka-instance.adoc#kafka[Provision a Kafka instance]
-* xref:01-provision-kafka-instance.adoc#configure_kafka[Configure the instance of {product-kafka} for use with {product-long-connectors}]
+* xref:01-provision-kafka-instance.adoc#configure_kafka[Configure the instance of {product-kafka} for use with {product-connectors}]
+
+.xref:02-source-connector.adoc[2. Create source and sink {product-connectors} instances]
+* xref:02-source-connector.adoc#create_source_connector[Create a {product-short-connectors} instance for a data source]
+* xref:02-source-connector.adoc#create_sink_connector[Create a {product-short-connectors} instance for a data sink]
+

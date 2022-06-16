@@ -50,8 +50,8 @@ image::rhosak-kafka-instance-ready.png[]
 After you create a {product-kafka} instance, configure it for use with {product-long-connectors} by performing the following tasks:
 
 * Create *Kafka topics* to store messages sent by producers (data sources) and make them available to consumers (data sinks).
-* Create *service accounts* that allow you to connect and authenticate your {product-connectors-short} with Kafka instances.
-* Set up *access rules* for the service accounts that define how your {product-connectors-short} can access and use the associated Kafka instance topics.
+* Create *service accounts* that allow you to connect and authenticate your {product-short-connectors} with Kafka instances.
+* Set up *access rules* for the service accounts that define how your {product-short-connectors} can access and use the associated Kafka instance topics.
 
 {nbsp}
 
