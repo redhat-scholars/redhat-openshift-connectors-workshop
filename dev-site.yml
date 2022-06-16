@@ -3,7 +3,7 @@ runtime:
 
 site:
   title: Red Hat OpenShift Connectors Workshop
-  start_page: red-hat-openshift-connectors-workshop::index.adoc
+  start_page: redhat-openshift-connectors-workshop::index.adoc
 
 content:
   sources:

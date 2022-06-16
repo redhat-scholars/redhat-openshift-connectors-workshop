@@ -3,8 +3,8 @@ runtime:
 
 site:
   title: Red Hat OpenShift Connectors Workshop
-  url: https://redhat-scholars.github.io/red-hat-openshift-connectors-workshop
-  start_page: red-hat-openshift-connectors-workshop::index.adoc
+  url: https://redhat-scholars.github.io/redhat-openshift-connectors-workshop
+  start_page: redhat-openshift-connectors-workshop::index.adoc
 
 content:
   sources:
