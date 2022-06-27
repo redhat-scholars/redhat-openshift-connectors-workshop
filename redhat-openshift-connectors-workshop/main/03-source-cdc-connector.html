@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Create a source OpenShift Connectors instance for Change Data Capture :: Red Hat OpenShift Connectors Workshop</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/redhat-openshift-connectors-workshop/redhat-openshift-connectors-workshop/main/03-source-cdc-connector.html">
+    <link rel="prev" href="02-source-connector.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/redhat-openshift-connectors-workshop">Red Hat OpenShift Connectors Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="redhat-openshift-connectors-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-provision-kafka-instance.html">1. Provision a Kafka instance in OpenShift Streams for Apache Kafka</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-provision-kafka-instance.html#redhat_account">Create a Red Hat Account</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-provision-kafka-instance.html#kafka">Provision a Kafka instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-provision-kafka-instance.html#configure_kafka">Configure the instance of Streams for Apache Kafka for use with OpenShift Connectors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-source-connector.html">2. Create source and sink OpenShift Connectors instances</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-source-connector.html#create_source_connector">Create a source connector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-source-connector.html#create_sink_connector">Create a sink connector</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-source-cdc-connector.html">3. Create a source OpenShift Connectors instance for Change Data Capture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#provision_mongo">Provision a MongoDB Atlas instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#create_cdc_connector">Create a Connectors instance for Change Data Capture with MongoDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#capture_change_events">Capture Change Data Events from MongoDB</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift Connectors Workshop</a></li>
+    <li><a href="03-source-cdc-connector.html">3. Create a source OpenShift Connectors instance for Change Data Capture</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/redhat-openshift-connectors-workshop/edit/main/documentation/modules/ROOT/pages/03-source-cdc-connector.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Create a source OpenShift Connectors instance for Change Data Capture</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Change Data Capture is a software process that detects changes (inserts, updates, deletes) to data in a database and transforms these changes into event streams that can be consumed by other systems or applications to react on these changes. Typical use cases for Change Data Capture include data replication, streaming analytics and event-driven distributed applications.</p>
+</div>
+<div class="paragraph">
+<p>Red Hat OpenShift Connectors offers a number of source connectors for Change Data Capture, based on the popular <a href="https://debezium.io">Debezium</a> project. OpenShift Connectors supported databases for Change Data Capture include PostgreSQL, MySQL, SQL Server and MongoDB.</p>
+</div>
+<div class="paragraph">
+<p>In this workshop you will configure a source connector to capture change data events from a MongoDB Atlas database. <a href="https://www.mongodb.com/cloud">MongoDB Atlas</a> is a fully managed cloud database provided by MongoDB. It offers a free tier for an easy getting started experience.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="provision_mongo"><a class="anchor" href="#provision_mongo"></a>Provision a MongoDB Atlas instance</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to <a href="https://www.mongodb.com/cloud/atlas/register">mongodb.com/cloud/atlas/register</a> to sign up for MongoDB Atlas. You can create an Atlas Account or sign up with Google. Accept the Privacy Policy and Terms of Service.</p>
+</li>
+<li>
+<p>After filling in a short questionnaire, you are taken to a page where you can choose the type of cloud database you want to provision. Choose the free (shared) option, and click <strong>Create</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-deploy-cloud-database.png" alt="mongo deploy cloud database">
+</div>
+</div>
+</li>
+<li>
+<p>On the next page, select the cloud provider and region. Leave the other options as is. Click <strong>Create Cluster</strong>.</p>
+</li>
+<li>
+<p>On the next page, you have to define the security settings for your MongoDB Atlas instance.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Authentication</strong>: choose <strong>Username and password</strong>. Fill in a username and password and click <strong>Create user</strong> to create a user to connect to your MongoDB instance.</p>
+</li>
+<li>
+<p><strong>Where would you like to connect from</strong>: for the moment, select <strong>My Local Environment</strong>, and click <strong>Add My Current IP Address</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-connect-local-environment.png" alt="mongo connect local environment">
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click <strong>Finish and Close</strong> to finish the security setup.</p>
+</li>
+<li>
+<p>The OpenShift Connectors instance needs to be able to connect to the MongoDB database, so you need to allow this connection. However, as you don&#8217;t know the IP address of the infrastructure your connectors run on, you need to enable access from everywhere.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>On the MongoDB Atlas web page for your MongoDB instance, select <strong>Network Access</strong> from the left menu.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-network-access.png" alt="mongo network access">
+</div>
+</div>
+</li>
+<li>
+<p>Click the <strong>Add IP Address</strong> button. In the dialog box type <code>0.0.0.0/0</code> in the <strong>Access List Entry</strong> field. Click <strong>Confirm</strong> to add the range to the IP Access List.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You probably want to remove this rule once you finish this workshop.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Create a database and a collection in the MongoDB instance. For this workshop you will use sample data that represent movies.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure you are on the <strong>Database</strong> page on the web page for your MongoDB instance. Click the <strong>Collections</strong> tab.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-database-collections.png" alt="mongo database collections">
+</div>
+</div>
+</li>
+<li>
+<p>Click the <strong>Add My Own Data</strong>. In the <strong>Create Database</strong> dialog box, enter <code>movies_db</code> for the <strong>Database name</strong> and <code>movies</code> for the <strong>Collection name</strong>. Click <strong>Create</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-create-database.png" alt="mongo create database">
+</div>
+</div>
+<div class="paragraph">
+<p>Your MongoDB Atlas instance is set up. You will insert data in the collection after creating the Connectors instance. Leave the browser tab to your MongoDB instance open.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="create_cdc_connector"><a class="anchor" href="#create_cdc_connector"></a>Create a Connectors instance for Change Data Capture with MongoDB</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>In a browser tab, navigate to <a href="https://console.redhat.com">console.redhat.com</a>, select <strong>Application and Data Services</strong>.</p>
+</li>
+<li>
+<p>On the Application and Data Services page, select <strong>Connectors</strong> and click <strong>Create Connectors instance</strong>.</p>
+</li>
+<li>
+<p>To find the <strong>Debezium MongoDB</strong> connector, enter <code>mongo</code> in the search field. Click the <strong>Debezium MongoDB Connector</strong> card and then click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Select the Streams for Apache Kafka instance for the connector to consume from.</p>
+</li>
+<li>
+<p>On the <strong>Namespace</strong> page, click the <strong>eval</strong> namespace that you created when you previously created your first source connector. Then click <strong>Next</strong>.</p>
+</li>
+<li>
+<p>Provide the core configuration for your connector:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Type a unique name for the connector.</p>
+</li>
+<li>
+<p>Type the <strong>Client ID</strong> and <strong>Client Secret</strong> of the service account that you created for your connectors and then click <strong>Next</strong>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Provide the connection configuration for your connector. For the <strong>Debezium MongoDB</strong> connector, provide the following information:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>Hosts</strong>: this is the set of public addresses of the replicaset of  your MongoDb instance.<br>
+You can find these on the <strong>Overview</strong> tab on the web page for your MongoDB instance.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-replicaset.png" alt="mongo replicaset">
+</div>
+</div>
+<div class="paragraph">
+<p>Click on the first link. This will bring you the status page of the replica. The address of the replica is shown at the top of the page, in <code>host:port</code> format.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-replica.png" alt="mongo replica">
+</div>
+</div>
+<div class="paragraph">
+<p>Copy the address to a text editor. Repeat for the other two replicas.</p>
+</div>
+<div class="paragraph">
+<p>Go back to the Connectors configuration page, and enter the addresses of the three replicas separated by comma&#8217;s in the <strong>Hosts</strong> field.</p>
+</div>
+<div class="paragraph">
+<p>The entry should look like (your values will be different):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ac-whrxxxx-shard-00-00.ooulprt.mongodb.net:27017, ac-whrxxxx-shard-00-01.ooulprt.mongodb.net:27017, ac-whrxxxx-shard-00-02.ooulprt.mongodb.net:27017</pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Namespace</strong>: A unique name that identifies this MongoDB instance. For example, enter <code>mongodb-atlas</code>.</p>
+</li>
+<li>
+<p><strong>Password</strong>: the password of the database user you created previously. Note that this is not the same user with which you logged in into MongoDB Atlas.</p>
+</li>
+<li>
+<p><strong>User</strong>: the user name of the database user you created previously</p>
+</li>
+<li>
+<p>Make sure the <strong>Enable SSL connection to MongoDB</strong> is checked.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/connectors-mongo-connection.png" alt="connectors mongo connection">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>On the next page of the wizard, you can leave the <strong>Filter definition</strong> page blank. Alternatively, you can set the <strong>Database filter</strong> to <code>movies_db</code> and/or the <strong>Collection filter</strong> to <code>movies_db.movies</code> to ensure you only capture change events from the movies collection. Make sure that the <strong>Include</strong> box is selected for both entries. Click <strong>Apply</strong> to apply the filter.</p>
+</li>
+<li>
+<p>Leave the values on the <strong>Data &amp; runtime</strong> page of the wizard as-is. These are advanced values that you rarely need to change.</p>
+</li>
+<li>
+<p>Review the summary of the configuration properties. Pay particular attention to the MongoDB Hosts field. Click <strong>Create Connector</strong> to create the connector.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Your connector instance will be added to the table of connectors. After a couple of seconds, the status of your connector instance will change to the <code>Ready</code> state. If your connector ends up in <code>Error</code> state, you can use the options icon (the three vertical dots) next to the connector to edit the configuration, and restart the connector.</p>
+</div>
+<div class="paragraph">
+<p>Once your Debezium connector is ready, you will see 3 additional topics in your Streams for Apache Kafka instance. Debezium connectors run on top of Kafka Connect (in contrast to the other OpenShift Connectors instances, which are based on Camel-K). Kafka Connect creates these three topics to maintain its internal state.</p>
+</div>
+<div class="paragraph">
+<p>To check for the existence of these topics:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>On the Application and Data Services page of <a href="https://console.redhat.com">console.redhat.com</a>, select <strong>Streams for Apache Kafka</strong> &gt; <strong>Kafka Instances</strong>.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Click the name of the Streams for Apache Kafka instance that you created for connectors.</p>
+</li>
+<li>
+<p>Select the <strong>Topics</strong> tab. You should see three additional topics, ending with <code>-config</code>, <code>-offset</code> and <code>status</code>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/connectors-dbz-topics.png" alt="connectors dbz topics">
+</div>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="capture_change_events"><a class="anchor" href="#capture_change_events"></a>Capture Change Data Events from MongoDB</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now you can add some data in the <code>movies</code> collection on your MongoDB Atlas instance and check the change data events created by the Connectors instance and streamed to Streams for Apache Kafka.</p>
+</div>
+<div class="paragraph">
+<p>There are different ways to load data into a MongoDB Atlas instance. In this workshop, for the sake of simplicity, you will use the MongoDB Atlas web UI.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Navigate to the web page of your MongoDB instance. Make sure you are on the <strong>Database</strong> page, and select the <strong>Collections</strong> tab. You should see the database and collection you created before.</p>
+</li>
+<li>
+<p>Select the <code>movies</code> selection, and click <strong>Insert Document</strong>.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-collection-create-document.png" alt="mongo collection create document">
+</div>
+</div>
+</li>
+<li>
+<p>In the <strong>Insert to Collection</strong> dialog box, select the <strong>JSON</strong> view (shown as <strong>{}</strong>), and insert the following JSON document:</p>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "title": "Bad Times at the El Royale",
+    "year": 2018,
+    "cast": [
+        "Jeff Bridges",
+        "Cynthia Erivo",
+        "Chris Hemsworth",
+        "Dakota Johnson",
+        "Jon Hamm",
+        "Cailee Spaeny",
+        "Lewis Pullman",
+        "Nick Offerman"
+    ],
+    "genres": [
+        "Drama",
+        "Action"
+    ]
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/mongo-collection-insert-document.png" alt="mongo collection insert document">
+</div>
+</div>
+<div class="paragraph">
+<p>Click <strong>Insert</strong> to add the document to the collection.</p>
+</div>
+</li>
+<li>
+<p>Head over to the Application and Data Services page of <a href="https://console.redhat.com">console.redhat.com</a>, select <strong>Streams for Apache Kafka</strong> &gt; <strong>Kafka Instances</strong>. Click the name of the Streams for Apache Kafka instance that you created for connectors. Select the <strong>Topics</strong> tab.<br>
+You should see a new topic called <code>mongo-atlas.movies_db.movies</code>. This is the topic generated by the Connectors instance for the change data events from the <code>movies_db</code> collection.</p>
+</li>
+<li>
+<p>Click on the topic name, and select the <strong>Messages</strong> tab. You should see one message in the topic with a payload similar to:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "after": "{\"_id\": {\"$oid\": \"62ab0e4d1f8d5b2ae8513274\"},\"title\": \"Bad Times at the El Royale\",\"year\": 2018,\"cast\": [\"Jeff Bridges\",\"Cynthia Erivo\",\"Chris Hemsworth\",\"Dakota Johnson\",\"Jon Hamm\",\"Cailee Spaeny\",\"Lewis Pullman\",\"Nick Offerman\"],\"genres\": [\"Drama\",\"Action\"]}",
+  "patch": null,
+  "filter": null,
+  "updateDescription": null,
+  "source": {
+    "version": "1.9.0.Alpha2",
+    "connector": "mongodb",
+    "name": "mongo-atlas",
+    "ts_ms": 1655377485000,
+    "snapshot": "false",
+    "db": "movies_db",
+    "sequence": null,
+    "rs": "atlas-ednqkj-shard-0",
+    "collection": "movies",
+    "ord": 21,
+    "h": null,
+    "tord": null,
+    "stxnid": null,
+    "lsid": null,
+    "txnNumber": null
+  },
+  "op": "c",
+  "ts_ms": 1655377485836,
+  "transaction": null
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/connectors-dbz-change-event-topic-message.png" alt="connectors dbz change event topic message">
+</div>
+</div>
+<div class="paragraph">
+<p>Notice the following about the change event payload:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>after</strong>: contains the latest state of the document.</p>
+</li>
+<li>
+<p><strong>source</strong>: contains metadata about the connector and the MongoDB instance.</p>
+</li>
+<li>
+<p><strong>op</strong>: specifies the operation that created this change. In this case the operation is <code>c</code>, which stands for <code>create</code>.</p>
+<div class="paragraph">
+<p>Refer to the <a href="https://debezium.io/documentation/reference/1.9/">Debezium documentation</a> for more information on Debezium and the structure of data change events it produces.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Add more documents to the <code>movies</code> collection. You should see one new event in the <code>mongo-atlas.movies_db.movies</code> for every document you add to the collection.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The example above is taken from a dataset hosted on Github: <a href="https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json" class="bare">https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json</a></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>You can also modify an existing document in the MongoDB collection through the MongoDB Atlas web UI. This update will also generate a change event in the Kafka topic.<br>
+For example, remove some of the cast of the <code>Bad Times at the El Royale</code> entry. This generates a change event similar to:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "after": "{\"_id\": {\"$oid\": \"62ab0e4d1f8d5b2ae8513274\"},\"title\": \"Bad Times at the El Royale\",\"year\": 2018,\"cast\": [\"Jeff Bridges\",\"Cynthia Erivo\",\"Chris Hemsworth\",\"Dakota Johnson\",\"Jon Hamm\"],\"genres\": [\"Drama\",\"Action\"]}",
+  "patch": null,
+  "filter": null,
+  "updateDescription": {
+    "removedFields": null,
+    "updatedFields": "{\"cast\": [\"Jeff Bridges\", \"Cynthia Erivo\", \"Chris Hemsworth\", \"Dakota Johnson\", \"Jon Hamm\"]}",
+    "truncatedArrays": null
+  },
+  "source": {
+    "version": "1.9.0.Alpha2",
+    "connector": "mongodb",
+    "name": "mongo-atlas",
+    "ts_ms": 1655380819000,
+    "snapshot": "false",
+    "db": "movies_db",
+    "sequence": null,
+    "rs": "atlas-ednqkj-shard-0",
+    "collection": "movies",
+    "ord": 15,
+    "h": null,
+    "tord": null,
+    "stxnid": null,
+    "lsid": null,
+    "txnNumber": null
+  },
+  "op": "u",
+  "ts_ms": 1655380819631,
+  "transaction": null
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the operation is now set to <code>u</code>, which stands for <code>update</code></p>
+</div>
+<div class="paragraph">
+<p>Likewise, a deletion will create a change event with operation <code>d</code>, and an empty <code>after</code> field.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>You have successfully created an OpenShift Connectors instance to capture data change events from a hosted MongoDB Atlas instance in an instance of OpenShift Streams for Apache Kafka.<br>
+This is of course only one part of the story. Typically these change events will be forwarded to other systems to power functionalities like data replication, streaming analytics etc, potentially after some form of transformation to e.g. extract the latest state of a document from the data change event payload.<br>
+Transformation is currently not part of the OpenShift Connectors capabilities, but will be added soon.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="02-source-connector.html">2. Create source and sink OpenShift Connectors instances</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

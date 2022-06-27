@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Red Hat OpenShift Connectors Workshop :: Red Hat OpenShift Connectors Workshop</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/redhat-openshift-connectors-workshop/redhat-openshift-connectors-workshop/main/index.html">
+    <link rel="next" href="01-provision-kafka-instance.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/redhat-openshift-connectors-workshop">Red Hat OpenShift Connectors Workshop</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="redhat-openshift-connectors-workshop" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-provision-kafka-instance.html">1. Provision a Kafka instance in OpenShift Streams for Apache Kafka</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-provision-kafka-instance.html#redhat_account">Create a Red Hat Account</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-provision-kafka-instance.html#kafka">Provision a Kafka instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-provision-kafka-instance.html#configure_kafka">Configure the instance of Streams for Apache Kafka for use with OpenShift Connectors</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="02-source-connector.html">2. Create source and sink OpenShift Connectors instances</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-source-connector.html#create_source_connector">Create a source connector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-source-connector.html#create_sink_connector">Create a sink connector</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-source-cdc-connector.html">3. Create a source OpenShift Connectors instance for Change Data Capture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-source-cdc-connector.html#provision_mongo">Provision a MongoDB Atlas instance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-source-cdc-connector.html#create_cdc_connector">Create a Connectors instance for Change Data Capture with MongoDB</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="03-source-cdc-connector.html#capture_change_events">Capture Change Data Events from MongoDB</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link is-current"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Red Hat OpenShift Connectors Workshop</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/redhat-openshift-connectors-workshop/edit/main/documentation/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Red Hat OpenShift Connectors Workshop</h1>
+<div class="sect1 text-center strong">
+<h2>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Welcome to the Red Hat OpenShift Connectors workshop.</p>
+</div>
+<div class="paragraph">
+<p>As a developer of applications and services, you can use Red Hat OpenShift Connectors to create and configure connections between OpenShift Streams for Apache Kafka and third-party systems.</p>
+</div>
+<div class="paragraph">
+<p>OpenShift Streams for Apache Kafka is a cloud service that simplifies the process of running Apache Kafka. Apache Kafka is an open-source, distributed, publish-subscribe messaging system for creating fault-tolerant, real-time data feeds. OpenShift Streams for Apache Kafka enables you to add Kafka data-streaming functionality in your applications without having to install, configure, run, and maintain your own Kafka clusters.</p>
+</div>
+<div class="paragraph">
+<p>You can use OpenShift Connectors to configure communication between Streams for Apache Kafka instances and external services and applications. OpenShift Connectors allow you to configure how data moves from one endpoint to another without writing code.</p>
+</div>
+<div class="paragraph">
+<p>The following diagram illustrates how data flows from a data source through a data source connector to a Kafka topic. And how data flows from a Kafka topic to a data sink through a data sink connector.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/connectors-diagram.png" alt="connectors diagram">
+</div>
+<div class="title">Figure 1. OpenShift Connectors data flow</div>
+</div>
+<div class="paragraph">
+<p>At the moment there are more than 50 source and sink connectors available. These include source and sink connectors to a variety of cloud services based on the awesome <a href="https://developers.redhat.com/topics/camel-k">Camel-K</a> technology, as well as source connectors for databases based on the popular <a href="https://debezium.io">Debezium</a> project for Change Data Capture. The complete list of available connectors to date can be found <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/connectors">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>In this workshop you will:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Provision a Kafka instance using OpenShift Streams for Apache Kafka.</p>
+</li>
+<li>
+<p>Configure the Streams for Apache Kafka instance for use with Red Hat OpenShift Connectors.</p>
+</li>
+<li>
+<p>Create a Connectors instance as a data source.</p>
+</li>
+<li>
+<p>Create a Connectors instance as a data sink.</p>
+</li>
+<li>
+<p>Create a Connectors instance to capture data change events from a cloud database.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1 tiles browse">
+<h2>Browse modules</h2>
+<div class="sectionbody">
+<div class="ulist tile">
+<div class="title"><a href="01-provision-kafka-instance.html" class="xref page">1. Provision a Kafka instance in OpenShift Streams for Apache Kafka</a></div>
+<ul>
+<li>
+<p><a href="01-provision-kafka-instance.html#redhat_account" class="xref page">Create a Red Hat Account</a></p>
+</li>
+<li>
+<p><a href="01-provision-kafka-instance.html#kafka" class="xref page">Provision a Kafka instance</a></p>
+</li>
+<li>
+<p><a href="01-provision-kafka-instance.html#configure_kafka" class="xref page">Configure the instance of Streams for Apache Kafka for use with OpenShift Connectors</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title"><a href="02-source-connector.html" class="xref page">2. Create source and sink OpenShift Connectors instances</a></div>
+<ul>
+<li>
+<p><a href="02-source-connector.html#create_source_connector" class="xref page">Create a Connectors instance for a data source</a></p>
+</li>
+<li>
+<p><a href="02-source-connector.html#create_sink_connector" class="xref page">Create a Connectors instance for a data sink</a></p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title"><a href="03-source-cdc-connector.html" class="xref page">3. Create a source {OpenShift Connectors instance for Change Data Capture</a></div>
+<ul>
+<li>
+<p><a href="03-source-cdc-connector.html#provision_mongo" class="xref page">Provision a MongoDB Atlas instance</a></p>
+</li>
+<li>
+<p><a href="03-source-cdc-connector.html#create_cdc_connector" class="xref page">Create a Connectors instance for Change Data Capture with MongoDB</a></p>
+</li>
+<li>
+<p><a href="03-source-cdc-connector.html#capture_change_events" class="xref page">Capture Change Data Events from MongoDB</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="next"><a href="01-provision-kafka-instance.html">1. Provision a Kafka instance in OpenShift Streams for Apache Kafka</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../../_/js/vendor/clipboard.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
