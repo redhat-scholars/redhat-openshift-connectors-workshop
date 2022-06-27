@@ -43,3 +43,7 @@ In this workshop you will:
 * xref:02-source-connector.adoc#create_source_connector[Create a {product-short-connectors} instance for a data source]
 * xref:02-source-connector.adoc#create_sink_connector[Create a {product-short-connectors} instance for a data sink]
 
+.xref:03-source-cdc-connector.adoc[3. Create a source {{product-connectors} instance for Change Data Capture]
+* xref:03-source-cdc-connector.adoc#provision_mongo[Provision a MongoDB Atlas instance]
+* xref:03-source-cdc-connector.adoc#create_cdc_connector[Create a {product-short-connectors} instance for Change Data Capture with MongoDB]
+* xref:03-source-cdc-connector.adoc#capture_change_events[Capture Change Data Events from MongoDB]

@@ -1,0 +1,228 @@
+include::_attributes.adoc[]
+= Create a source {product-connectors} instance for Change Data Capture
+
+Change Data Capture is a software process that detects changes (inserts, updates, deletes) to data in a database and transforms these changes into event streams that can be consumed by other systems or applications to react on these changes. Typical use cases for Change Data Capture include data replication, streaming analytics and event-driven distributed applications.
+
+{product-long-connectors} offers a number of source connectors for Change Data Capture, based on the popular https://debezium.io[Debezium] project. {product-connectors} supported databases for Change Data Capture include PostgreSQL, MySQL, SQL Server and MongoDB.
+
+In this workshop you will configure a source connector to capture change data events from a MongoDB Atlas database. link:https://www.mongodb.com/cloud[MongoDB Atlas] is a fully managed cloud database provided by MongoDB. It offers a free tier for an easy getting started experience.
+
+[#provision_mongo]
+== Provision a MongoDB Atlas instance
+
+. Navigate to link:https://www.mongodb.com/cloud/atlas/register[mongodb.com/cloud/atlas/register] to sign up for MongoDB Atlas. You can create an Atlas Account or sign up with Google. Accept the Privacy Policy and Terms of Service.
+. After filling in a short questionnaire, you are taken to a page where you can choose the type of cloud database you want to provision. Choose the free (shared) option, and click *Create*.
++
+image::mongo-deploy-cloud-database.png[]
+. On the next page, select the cloud provider and region. Leave the other options as is. Click *Create Cluster*.
+. On the next page, you have to define the security settings for your MongoDB Atlas instance.
+* *Authentication*: choose *Username and password*. Fill in a username and password and click *Create user* to create a user to connect to your MongoDB instance.
+* *Where would you like to connect from*: for the moment, select *My Local Environment*, and click *Add My Current IP Address*. 
++
+image::mongo-connect-local-environment.png[]
+. Click *Finish and Close* to finish the security setup.
+. The {product-connectors} instance needs to be able to connect to the MongoDB database, so you need to allow this connection. However, as you don't know the IP address of the infrastructure your connectors run on, you need to enable access from everywhere.
+* On the MongoDB Atlas web page for your MongoDB instance, select *Network Access* from the left menu.
++
+image::mongo-network-access.png[]
+* Click the *Add IP Address* button. In the dialog box type `0.0.0.0/0` in the *Access List Entry* field. Click *Confirm* to add the range to the IP Access List.
++
+[NOTE]
+====
+You probably want to remove this rule once you finish this workshop.
+====
+
+. Create a database and a collection in the MongoDB instance. For this workshop you will use sample data that represent movies.
+* Make sure you are on the *Database* page on the web page for your MongoDB instance. Click the *Collections* tab.
++
+image::mongo-database-collections.png[]
+* Click the *Add My Own Data*. In the *Create Database* dialog box, enter `movies_db` for the *Database name* and `movies` for the *Collection name*. Click *Create*.
++
+image::mongo-create-database.png[]
++
+Your MongoDB Atlas instance is set up. You will insert data in the collection after creating the {product-short-connectors} instance. Leave the browser tab to your MongoDB instance open.
+
+[#create_cdc_connector]
+== Create a {product-short-connectors} instance for Change Data Capture with MongoDB
+
+. In a browser tab, navigate to https://console.redhat.com[console.redhat.com], select *Application and Data Services*.
+. On the Application and Data Services page, select *Connectors* and click *Create Connectors instance*.
+. To find the *Debezium MongoDB* connector, enter `mongo` in the search field. Click the *Debezium MongoDB Connector* card and then click *Next*.
+. Select the {product-kafka} instance for the connector to consume from.
+. On the *Namespace* page, click the *eval* namespace that you created when you previously created your first source connector. Then click *Next*.
+. Provide the core configuration for your connector:
+.. Type a unique name for the connector.
+.. Type the *Client ID* and *Client Secret* of the service account that you created for your connectors and then click *Next*.
+. Provide the connection configuration for your connector. For the *Debezium MongoDB* connector, provide the following information:
+.. *Hosts*: this is the set of public addresses of the replicaset of  your MongoDb instance. +
+You can find these on the *Overview* tab on the web page for your MongoDB instance.
++
+image::mongo-replicaset.png[]
++
+Click on the first link. This will bring you the status page of the replica. The address of the replica is shown at the top of the page, in `host:port` format.
++
+image::mongo-replica.png[]
++
+Copy the address to a text editor. Repeat for the other two replicas.
++
+Go back to the {product-short-connectors} configuration page, and enter the addresses of the three replicas separated by comma's in the *Hosts* field.
++
+The entry should look like (your values will be different):
++
+----
+ac-whrxxxx-shard-00-00.ooulprt.mongodb.net:27017, ac-whrxxxx-shard-00-01.ooulprt.mongodb.net:27017, ac-whrxxxx-shard-00-02.ooulprt.mongodb.net:27017
+----
+.. *Namespace*: A unique name that identifies this MongoDB instance. For example, enter `mongodb-atlas`.
+.. *Password*: the password of the database user you created previously. Note that this is not the same user with which you logged in into MongoDB Atlas.
+.. *User*: the user name of the database user you created previously
+.. Make sure the *Enable SSL connection to MongoDB* is checked.
++
+image::connectors-mongo-connection.png[]
+. On the next page of the wizard, you can leave the *Filter definition* page blank. Alternatively, you can set the *Database filter* to `movies_db` and/or the *Collection filter* to `movies_db.movies` to ensure you only capture change events from the movies collection. Make sure that the *Include* box is selected for both entries. Click *Apply* to apply the filter.
+. Leave the values on the *Data & runtime* page of the wizard as-is. These are advanced values that you rarely need to change.
+. Review the summary of the configuration properties. Pay particular attention to the MongoDB Hosts field. Click *Create Connector* to create the connector.
+
+Your connector instance will be added to the table of connectors. After a couple of seconds, the status of your connector instance will change to the `Ready` state. If your connector ends up in `Error` state, you can use the options icon (the three vertical dots) next to the connector to edit the configuration, and restart the connector.
+
+Once your Debezium connector is ready, you will see 3 additional topics in your {product-kafka} instance. Debezium connectors run on top of Kafka Connect (in contrast to the other {product-connectors} instances, which are based on Camel-K). Kafka Connect creates these three topics to maintain its internal state.
+
+To check for the existence of these topics:
+
+. On the Application and Data Services page of link:https://console.redhat.com[console.redhat.com], select *Streams for Apache Kafka* > *Kafka Instances*.
+.. Click the name of the {product-kafka} instance that you created for connectors.
+.. Select the *Topics* tab. You should see three additional topics, ending with `-config`, `-offset` and `status`.
++
+image::connectors-dbz-topics.png[]
+
+[#capture_change_events]
+== Capture Change Data Events from MongoDB
+
+Now you can add some data in the `movies` collection on your MongoDB Atlas instance and check the change data events created by the {product-short-connectors} instance and streamed to {product-kafka}.
+
+There are different ways to load data into a MongoDB Atlas instance. In this workshop, for the sake of simplicity, you will use the MongoDB Atlas web UI.
+
+. Navigate to the web page of your MongoDB instance. Make sure you are on the *Database* page, and select the *Collections* tab. You should see the database and collection you created before.
+. Select the `movies` selection, and click *Insert Document*.
++
+image::mongo-collection-create-document.png[]
+. In the *Insert to Collection* dialog box, select the *JSON* view (shown as *{}*), and insert the following JSON document:
++
+[.console-input]
+[source,json]
+----
+{
+    "title": "Bad Times at the El Royale",
+    "year": 2018,
+    "cast": [
+        "Jeff Bridges",
+        "Cynthia Erivo",
+        "Chris Hemsworth",
+        "Dakota Johnson",
+        "Jon Hamm",
+        "Cailee Spaeny",
+        "Lewis Pullman",
+        "Nick Offerman"
+    ],
+    "genres": [
+        "Drama",
+        "Action"
+    ]
+}
+----
++
+image::mongo-collection-insert-document.png[]
++
+Click *Insert* to add the document to the collection.
+. Head over to the Application and Data Services page of link:https://console.redhat.com[console.redhat.com], select *Streams for Apache Kafka* > *Kafka Instances*. Click the name of the {product-kafka} instance that you created for connectors. Select the *Topics* tab. +
+You should see a new topic called `mongo-atlas.movies_db.movies`. This is the topic generated by the {product-short-connectors} instance for the change data events from the `movies_db` collection.
+. Click on the topic name, and select the *Messages* tab. You should see one message in the topic with a payload similar to:
++
+[source,json]
+----
+{
+  "after": "{\"_id\": {\"$oid\": \"62ab0e4d1f8d5b2ae8513274\"},\"title\": \"Bad Times at the El Royale\",\"year\": 2018,\"cast\": [\"Jeff Bridges\",\"Cynthia Erivo\",\"Chris Hemsworth\",\"Dakota Johnson\",\"Jon Hamm\",\"Cailee Spaeny\",\"Lewis Pullman\",\"Nick Offerman\"],\"genres\": [\"Drama\",\"Action\"]}",
+  "patch": null,
+  "filter": null,
+  "updateDescription": null,
+  "source": {
+    "version": "1.9.0.Alpha2",
+    "connector": "mongodb",
+    "name": "mongo-atlas",
+    "ts_ms": 1655377485000,
+    "snapshot": "false",
+    "db": "movies_db",
+    "sequence": null,
+    "rs": "atlas-ednqkj-shard-0",
+    "collection": "movies",
+    "ord": 21,
+    "h": null,
+    "tord": null,
+    "stxnid": null,
+    "lsid": null,
+    "txnNumber": null
+  },
+  "op": "c",
+  "ts_ms": 1655377485836,
+  "transaction": null
+}
+----
++
+image::connectors-dbz-change-event-topic-message.png[]
++
+Notice the following about the change event payload:
++
+* *after*: contains the latest state of the document.
+* *source*: contains metadata about the connector and the MongoDB instance.
+* *op*: specifies the operation that created this change. In this case the operation is `c`, which stands for `create`.
++
+Refer to the link:https://debezium.io/documentation/reference/1.9/[Debezium documentation] for more information on Debezium and the structure of data change events it produces.
+. Add more documents to the `movies` collection. You should see one new event in the `mongo-atlas.movies_db.movies` for every document you add to the collection.
++
+[NOTE]
+====
+The example above is taken from a dataset hosted on Github: https://raw.githubusercontent.com/prust/wikipedia-movie-data/master/movies.json
+====
+. You can also modify an existing document in the MongoDB collection through the MongoDB Atlas web UI. This update will also generate a change event in the Kafka topic. +
+For example, remove some of the cast of the `Bad Times at the El Royale` entry. This generates a change event similar to:
++
+[source,json]
+----
+{
+  "after": "{\"_id\": {\"$oid\": \"62ab0e4d1f8d5b2ae8513274\"},\"title\": \"Bad Times at the El Royale\",\"year\": 2018,\"cast\": [\"Jeff Bridges\",\"Cynthia Erivo\",\"Chris Hemsworth\",\"Dakota Johnson\",\"Jon Hamm\"],\"genres\": [\"Drama\",\"Action\"]}",
+  "patch": null,
+  "filter": null,
+  "updateDescription": {
+    "removedFields": null,
+    "updatedFields": "{\"cast\": [\"Jeff Bridges\", \"Cynthia Erivo\", \"Chris Hemsworth\", \"Dakota Johnson\", \"Jon Hamm\"]}",
+    "truncatedArrays": null
+  },
+  "source": {
+    "version": "1.9.0.Alpha2",
+    "connector": "mongodb",
+    "name": "mongo-atlas",
+    "ts_ms": 1655380819000,
+    "snapshot": "false",
+    "db": "movies_db",
+    "sequence": null,
+    "rs": "atlas-ednqkj-shard-0",
+    "collection": "movies",
+    "ord": 15,
+    "h": null,
+    "tord": null,
+    "stxnid": null,
+    "lsid": null,
+    "txnNumber": null
+  },
+  "op": "u",
+  "ts_ms": 1655380819631,
+  "transaction": null
+}
+----
++
+Notice that the operation is now set to `u`, which stands for `update`
++
+Likewise, a deletion will create a change event with operation `d`, and an empty `after` field.
+
+You have successfully created an {product-connectors} instance to capture data change events from a hosted MongoDB Atlas instance in an instance of {product-long-kafka}. +
+This is of course only one part of the story. Typically these change events will be forwarded to other systems to power functionalities like data replication, streaming analytics etc, potentially after some form of transformation to e.g. extract the latest state of a document from the data change event payload. +
+Transformation is currently not part of the {product-connectors} capabilities, but will be added soon.

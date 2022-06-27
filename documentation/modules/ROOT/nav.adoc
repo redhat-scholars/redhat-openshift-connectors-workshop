@@ -6,3 +6,8 @@
 * xref:02-source-connector.adoc[2. Create source and sink OpenShift Connectors instances]
 ** xref:02-source-connector.adoc#create_source_connector[Create a source connector]
 ** xref:02-source-connector.adoc#create_sink_connector[Create a sink connector]
+
+* xref:03-source-cdc-connector.adoc[3. Create a source OpenShift Connectors instance for Change Data Capture]
+** xref:03-source-cdc-connector.adoc#provision_mongo[Provision a MongoDB Atlas instance]
+** xref:03-source-cdc-connector.adoc#create_cdc_connector[Create a Connectors instance for Change Data Capture with MongoDB]
+** xref:03-source-cdc-connector.adoc#capture_change_events[Capture Change Data Events from MongoDB]
