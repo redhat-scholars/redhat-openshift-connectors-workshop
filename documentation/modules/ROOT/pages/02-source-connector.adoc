@@ -65,7 +65,7 @@ image::rhosak-topic-view-messages.png[]
 
 A *sink* connector consumes messages from a Kafka topic and sends them to an external system.
 
-For this workshop, you use the *HTTP Sink* connector which consumes which consumes Kafka messages from one or more topics and sends the messages to an HTTP endpoint.
+For this workshop, you use the *HTTP Sink* connector which consumes Kafka messages from one or more topics and sends the messages to an HTTP endpoint.
 
 The https://webhook.site[webhook.site^] service offers a convenient way to obtain a general-purpose HTTP endpoint. Open a new tab in your browser and navigate to https://webhook.site. The page displays a unique URL that you can use as a data sink.
 
