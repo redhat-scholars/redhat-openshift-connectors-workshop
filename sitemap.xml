@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://redhat-scholars.github.io/redhat-openshift-connectors-workshop/redhat-openshift-connectors-workshop/main/01-provision-kafka-instance.html</loc>
-<lastmod>2022-06-28T08:25:10.999Z</lastmod>
+<lastmod>2022-06-29T13:08:33.014Z</lastmod>
 </url>
 <url>
 <loc>https://redhat-scholars.github.io/redhat-openshift-connectors-workshop/redhat-openshift-connectors-workshop/main/02-source-connector.html</loc>
-<lastmod>2022-06-28T08:25:10.999Z</lastmod>
+<lastmod>2022-06-29T13:08:33.014Z</lastmod>
 </url>
 <url>
 <loc>https://redhat-scholars.github.io/redhat-openshift-connectors-workshop/redhat-openshift-connectors-workshop/main/03-source-cdc-connector.html</loc>
-<lastmod>2022-06-28T08:25:10.999Z</lastmod>
+<lastmod>2022-06-29T13:08:33.014Z</lastmod>
 </url>
 <url>
 <loc>https://redhat-scholars.github.io/redhat-openshift-connectors-workshop/redhat-openshift-connectors-workshop/main/index.html</loc>
-<lastmod>2022-06-28T08:25:10.999Z</lastmod>
+<lastmod>2022-06-29T13:08:33.014Z</lastmod>
 </url>
 </urlset>
