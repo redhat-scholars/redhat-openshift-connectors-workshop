@@ -10,4 +10,4 @@
 * xref:03-source-cdc-connector.adoc[3. Create a source OpenShift Connectors instance for Change Data Capture]
 ** xref:03-source-cdc-connector.adoc#provision_mongo[Provision a MongoDB Atlas instance]
 ** xref:03-source-cdc-connector.adoc#create_cdc_connector[Create a Connectors instance for Change Data Capture with MongoDB]
-** xref:03-source-cdc-connector.adoc#capture_change_events[Capture Change Data Events from MongoDB]
+** xref:03-source-cdc-connector.adoc#capture_change_events[Capture Data Change Events from MongoDB]
